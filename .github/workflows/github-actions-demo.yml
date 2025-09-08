@@ -1,0 +1,42 @@
+name: GitHub Actions MLOPS Prod 1
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t ps-mlops-prod1 -f docker/Dockerfile .
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Test dependencies
+        run: |
+          pip install -r test/requirements.txt
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 5757:5757 --name test-mlops ps-mlops-prod1
+
+      - name: Run tests
+        run: |
+          pytest test
+
+      - name: Stop Docker container
+        if: always()
+        run: |
+          docker stop test-mlops || true
+          docker rm test-mlops || true
