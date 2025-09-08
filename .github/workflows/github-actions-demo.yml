@@ -35,6 +35,16 @@ jobs:
         run: |
           docker run -d -p 5757:5757 --name test-mlops ps-mlops-prod1
 
+      - name: Wait for application to be ready
+        run: |
+          for i in {1..20}; do
+            if curl -s http://localhost:5757/docs > /dev/null; then
+              echo "Application is running"; exit 0;
+            fi
+            echo "Waiting for the application to run"; sleep 2;
+          done
+          echo "Error: application did not start"; exit 1
+
       - name: Run tests
         run: |
           pytest test
