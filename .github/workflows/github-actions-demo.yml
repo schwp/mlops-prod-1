@@ -18,6 +18,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Build Docker image
+        run: |
+          docker build -t ps-mlops-prod1 -f docker/Dockerfile .
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
