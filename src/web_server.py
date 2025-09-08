@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 
-app = FastAPI()
+app = FastAPI(port=5757)
 model = joblib.load("../model/regression.joblib")
 
 class Item(BaseModel):
