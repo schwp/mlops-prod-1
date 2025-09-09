@@ -1,5 +1,8 @@
 name: GitHub Actions MLOPS Prod 1
 on: [push]
+permissions:
+  contents: read
+  packages: write
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: schwp/ps-mlops-prod1
