@@ -39,12 +39,12 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -d -p 5757:5757 --name test-mlops ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+          docker run -d -p 5700:5700 --name test-mlops ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Wait for application to be ready
         run: |
           for i in {1..20}; do
-            if curl -s http://localhost:5757/docs > /dev/null; then
+            if curl -s http://localhost:5700/docs > /dev/null; then
               echo "Application is running"; exit 0;
             fi
             echo "Waiting for the application to run"; sleep 2;
@@ -80,4 +80,4 @@ jobs:
             docker pull ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
             docker stop ps-mlops-prod1 || true
             docker rm ps-mlops-prod1 || true
-            docker run -d -p 5757:5757 --name ps-mlops-prod1 ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+            docker run -d -p 5700:5700 --name ps-mlops-prod1 ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest

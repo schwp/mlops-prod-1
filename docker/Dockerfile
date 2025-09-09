@@ -9,6 +9,6 @@ COPY ./src ./src
 COPY ./model ./model
 COPY ./data ./data
 
-EXPOSE 5757
+EXPOSE 5700
 
-CMD ["sh", "-c", "cd src; fastapi dev web_server.py --host 0.0.0.0 --port 5757"]
+CMD ["sh", "-c", "cd src; fastapi dev web_server.py --host 0.0.0.0 --port 5700"]
