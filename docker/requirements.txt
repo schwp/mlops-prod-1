@@ -4,3 +4,4 @@ joblib
 streamlit
 scikit-learn
 transformers[torch]
+accelerate

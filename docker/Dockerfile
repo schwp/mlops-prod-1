@@ -1,9 +1,11 @@
-FROM python:3.10-slim
+FROM python:3.10-alpine
 
 WORKDIR /app
 
 COPY ./docker/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip cache purge
 
 COPY ./src ./src
 COPY ./model ./model
